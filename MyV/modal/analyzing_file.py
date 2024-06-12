@@ -86,10 +86,14 @@ def spleet(org_file_name):
 
     #os.makedirs(output_dir)#spleet 함수 쓸 경우 만들어야 하니까
     stems = 5
-    file_path = os.path.join(os.getcwd(),'media','vocalReportSrc',org_file_name) #mp3파일이 있는 폴더로 파일명 정해주기 (확장자는 not yet) 
+    file_path = os.path.join(os.getcwd(),'media','vocalReportSrc', org_file_name) #mp3파일이 있는 폴더로 파일명 정해주기 (확장자는 not yet) 
     file_name = org_file_name #그냥 파일명 org, usr 이렇게 
-    spl = f'spleeter separate -p spleeter:{stems}stems -o "{output_dir}" "{file_path}.mp3"'
-    os.system(spl)
+    # spl = f'spleeter separate -p spleeter:{stems}stems -o "{output_dir}" "{file_path}.mp3"'
+    # os.system(spl)
+    seperator = Separator("spleeter:5stems")
+    file_path = os.path.join(os.getcwd(), 'media','vocalReportSrc', org_file_name + ".mp3")
+    seperator.separate_to_file(file_path, output_dir)
+
     print("##check point1##")
 
     src = os.path.join(output_dir, file_name, "vocals.wav") #spleet 함수로 만든 vocal.wav 찾기
@@ -193,23 +197,21 @@ def accuracy_analysis(t_org, t_usr, idx, f0_org, f0_usr):
 ##0517 update
 def org_convert_format():
     is_org_m4a = False
-    if (os.path.isfile(os.path.join(os.getcwd(), 'media', 'vocalReportSrc', 'org.m4a'))) :
+    if (os.path.isfile(os.path.join(os.getcwd(), 'media', 'vocalReportSrc','org.m4a'))) :
         is_org_m4a = True
 
     if(is_org_m4a):
         org_audio = AudioSegment.from_file(os.path.join(os.getcwd(), 'media','vocalReportSrc','org.m4a'), format="m4a")
         org_audio.export(os.path.join(os.getcwd(), 'media', 'vocalReportSrc','org.mp3'), format="mp3")
-        print("org converted")
 
 def usr_convert_format():
     is_usr_m4a = False
-    if (os.path.isfile(os.path.join(os.getcwd(), 'media', 'vocalReportSrc','usr.m4a'))):
+    if (os.path.isfile(os.path.join(os.getcwd(), 'media','vocalReportSrc','usr.m4a'))):
         is_usr_m4a = True
 
     if(is_usr_m4a):
-        org_audio = AudioSegment.from_file(os.path.join(os.getcwd(), 'media', 'vocalReportSrc', 'usr.m4a'), format="m4a")
-        org_audio.export(os.path.join(os.getcwd(), 'media', 'vocalReportSrc', 'usr.mp3'), format="mp3")
-        print("usr converted")
+        org_audio = AudioSegment.from_file(os.path.join(os.getcwd(), 'media', 'vocalReportSrc','usr.m4a'), format="m4a")
+        org_audio.export(os.path.join(os.getcwd(), 'media','vocalReportSrc','usr.mp3'), format="mp3")
 
 def remove_prefiles():
     if (os.path.isfile(os.path.join(os.getcwd(),'media','vocalReportSrc','org.wav'))):

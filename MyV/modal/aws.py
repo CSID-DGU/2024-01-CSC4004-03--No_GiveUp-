@@ -40,7 +40,9 @@ def downloadFile() :
     #파일 다운로드 진행하기
     latest_upload = UploadAnalyzeFile.objects.latest('id')
     mine_file_name = latest_upload.fMySound_name
+    print(mine_file_name)
     compare_file_name = latest_upload.fCompareSound_name
+    print(compare_file_name)
 
     mine_obj_file = f'vocalReportSource/{mine_file_name}'
     compare_obj_file = f'vocalReportSource/{compare_file_name}'
@@ -50,10 +52,10 @@ def downloadFile() :
     print("Compare sound file name:", compare_file_name)
     print("###버킷 접근 성공###")
     
-    save_file = os.path.join(os.getcwd(), 'media', 'vocalReportSrc', 'usr.wav') #저장위치 및 파일 다른 이름으로 저장하기 but 이름변경 안할거임
+    save_file = os.path.join(os.getcwd(), 'media', 'vocalReportSrc', mine_file_name) #저장위치 및 파일 다른 이름으로 저장하기 but 이름변경 안할거임
     bucket.download_file(mine_obj_file,save_file)
 
-    save_file = os.path.join(os.getcwd(), 'media', 'vocalReportSrc', 'org.m4a') #저장위치 및 파일 다른 이름으로 저장하기 but 이름변경 안할거임
+    save_file = os.path.join(os.getcwd(), 'media', 'vocalReportSrc', compare_file_name) #저장위치 및 파일 다른 이름으로 저장하기 but 이름변경 안할거임
     bucket.download_file(compare_obj_file,save_file)
     return 1;
 
