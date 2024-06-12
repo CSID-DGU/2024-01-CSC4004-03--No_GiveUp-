@@ -38,8 +38,16 @@ def downloadFile() :
     print(bucket)
 
     #파일 다운로드 진행하기
-    mine_obj_file= 'vocalReportSource/usr.wav' #디렉토리 버킷 접근하기
-    compare_obj_file='vocalReportSource/org.m4a'
+    latest_upload = UploadAnalyzeFile.objects.latest('id')
+    mine_file_name = latest_upload.fMySound_name
+    compare_file_name = latest_upload.fCompareSound_name
+
+    mine_obj_file = f'vocalReportSource/{mine_file_name}'
+    compare_obj_file = f'vocalReportSource/{compare_file_name}'
+
+    # 파일명 출력 테스트
+    print("My sound file name:", mine_file_name)
+    print("Compare sound file name:", compare_file_name)
     print("###버킷 접근 성공###")
     
     save_file = os.path.join(os.getcwd(), 'media', 'vocalReportSrc', 'usr.wav') #저장위치 및 파일 다른 이름으로 저장하기 but 이름변경 안할거임
