@@ -227,5 +227,5 @@ def remove_prefiles():
     if (os.path.isfile(os.path.join(os.getcwd(),'media','vocalReportSrc','usr.m4a'))):
         os.remove(os.path.join(os.getcwd(),'media','vocalReportSrc','usr.m4a'))
     
-    #shutil.rmtree(os.path.join(os.getcwd(), 'pretrained_models'))
+    shutil.rmtree(os.path.join(os.getcwd(), 'pretrained_models'))
                            
