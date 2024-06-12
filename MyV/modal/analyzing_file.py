@@ -24,12 +24,12 @@ def process_file():
 
     #확장자 예외처리
     org_convert_format()
-    #usr_convert_format()
+    usr_convert_format()
     print("##확장자 예외처리 성공##")
 
     # 반주 & 보컬 분리
     spleet(org)
-    #spleet(usr)
+    spleet(usr)
     
     plt.figure(figsize=(12, 4))
     print("#################분리완#################")
@@ -88,7 +88,7 @@ def spleet(org_file_name):
     stems = 5
     file_path = os.path.join(os.getcwd(),'media','vocalReportSrc',org_file_name) #mp3파일이 있는 폴더로 파일명 정해주기 (확장자는 not yet) 
     file_name = org_file_name #그냥 파일명 org, usr 이렇게 
-    spl = f'spleeter separate -p spleeter:{stems}stems -o "{output_dir}" "{file_path}.m4a"'
+    spl = f'spleeter separate -p spleeter:{stems}stems -o "{output_dir}" "{file_path}.mp3"'
     os.system(spl)
     print("##check point1##")
 
@@ -107,7 +107,7 @@ def spleet(org_file_name):
 
     if (os.path.isfile(file_name + ".wav")):
         os.remove(file_name + ".wav")
-    os.rename(os.path.join(dst,"vocals.wav"), os.path.join(dst,"org.wav"))
+    os.rename(os.path.join(dst,"vocals.wav"), os.path.join(dst, org_file_name + ".wav"))
 
 def get_start_pos(f1_org, f1_usr, t_org, t_usr):
     # 두 함수 미분
@@ -178,7 +178,7 @@ def accuracy_analysis(t_org, t_usr, idx, f0_org, f0_usr):
 
     # plot update 0517
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=t_org, y=f0_org, fill='tozeroy', name='compare'))
+    fig.add_trace(go.Scatter(x=t_usr, y=f0_org, fill='tozeroy', name='compare'))
     fig.add_trace(go.Scatter(x=t_usr, y=f0_usr, fill='tozeroy', name='user'))
     fig.add_hline(y=max_hz, line_dash="dash", label=dict(text="max note"))
     fig.add_hline(y=min_hz, line_dash="dash", label=dict(text="min note"))
@@ -193,21 +193,23 @@ def accuracy_analysis(t_org, t_usr, idx, f0_org, f0_usr):
 ##0517 update
 def org_convert_format():
     is_org_m4a = False
-    if (os.path.isfile(os.path.join(os.getcwd(), 'media', 'org.m4a'))) :
+    if (os.path.isfile(os.path.join(os.getcwd(), 'media', 'vocalReportSrc', 'org.m4a'))) :
         is_org_m4a = True
 
     if(is_org_m4a):
-        org_audio = AudioSegment.from_file(os.path.join(os.getcwd(), 'media','org.m4a'), format="m4a")
-        org_audio.export(os.path.join(os.getcwd(), 'media', 'org.mp3'), format="mp3")
+        org_audio = AudioSegment.from_file(os.path.join(os.getcwd(), 'media','vocalReportSrc','org.m4a'), format="m4a")
+        org_audio.export(os.path.join(os.getcwd(), 'media', 'vocalReportSrc','org.mp3'), format="mp3")
+        print("org converted")
 
 def usr_convert_format():
     is_usr_m4a = False
-    if (os.path.isfile(os.path.join(os.getcwd(), 'media','usr.m4a'))):
+    if (os.path.isfile(os.path.join(os.getcwd(), 'media', 'vocalReportSrc','usr.m4a'))):
         is_usr_m4a = True
 
     if(is_usr_m4a):
-        org_audio = AudioSegment.from_file(os.path.join(os.getcwd(), 'media', 'usr.m4a'), format="m4a")
-        org_audio.export(os.path.join(os.getcwd(), 'media','usr.mp3'), format="mp3")
+        org_audio = AudioSegment.from_file(os.path.join(os.getcwd(), 'media', 'vocalReportSrc', 'usr.m4a'), format="m4a")
+        org_audio.export(os.path.join(os.getcwd(), 'media', 'vocalReportSrc', 'usr.mp3'), format="mp3")
+        print("usr converted")
 
 def remove_prefiles():
     if (os.path.isfile(os.path.join(os.getcwd(),'media','vocalReportSrc','org.wav'))):
