@@ -1,3 +1,14 @@
-{% load static %}
-<h1>Sportify 추천 테스트 입니다.</h1>
-아직 결과는 서버에서만 볼 수 있음 ㅋ
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR 코드</title>
+</head>
+<body>
+    <h1>QR 코드</h1>
+    {% if qr_code_url %}
+        <img src="{{ qr_code_url }}" alt="QR Code">
+    {% else %}
+        <p>QR 코드가 없습니다.</p>
+    {% endif %}
+</body>
+</html>
