@@ -274,9 +274,27 @@
   color: #eeeeee;
   position: relative;
   left: 35px;
-  bottom: 580px;
+  bottom: 600px;
 }
-
+#QRimage{
+  width: 50px;
+  position: relative;
+  left: 1px;
+  bottom: 600px;
+}
+#go_QR {
+  width: 200px;
+  height: 30px;
+  border: 0;
+  border-radius: 100px;
+  font-size: 15px;
+  font-weight: 700;
+  background-color: #5d5fef;
+  color: #eeeeee;
+  position: relative;
+  left: 100px;
+  bottom: 595px;
+}
 #yournote{
   width:165px;
 }

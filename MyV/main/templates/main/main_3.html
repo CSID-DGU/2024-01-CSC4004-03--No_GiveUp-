@@ -96,6 +96,7 @@
                     <audio id="audio" controls></audio>
                 </div>
             </main>
+            
             <footer>
                 <div id="grid">
                     <div class="item">
@@ -115,12 +116,18 @@
                         <p class="value">{{ tmpo }}</p>
                     </div>
                 </div>
+                
                 <form id="albumForm" method="post" action="{% url 'playlistPage' %}">
                     {% csrf_token %}
                     <input type="hidden" name="selected_album_id" id="selected_album_id">
-                    <input type="button" id="go_playlist" value="플레이리스트 보러 가기" onclick="submitForm();">
+                    <input type="button" id="go_playlist" value="플레이리스트 보러 가기" onclick="submitForm('albumForm');">
                 </form>
-                
+                <img src="{{ qr_code_url }}" id ="QRimage" >
+                <form id="QRForm" method="post" action="{% url 'qrPage' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="selected_album_id" id="selected_album_id">
+                    <input type="button" id="go_QR" value="QR로 결과 저장하기" onclick="submitForm('QRForm');">
+                </form>
             </footer>
         </div>
     </div>
@@ -158,12 +165,12 @@ function song_select(clicked_id) {
     console.log("curselected:", cur_selected)
 }
 
-function submitForm() {
-        if (cur_selected !== 0) {
-            document.getElementById('albumForm').submit();
-        } else {
-            alert('먼저 앨범을 선택해주세요.');
-        }
+function submitForm(formId) {
+    if (cur_selected !== 0) {
+        document.getElementById(formId).submit();
+    } else {
+        alert('먼저 앨범을 선택해주세요.');
     }
+}
 
 </script>
